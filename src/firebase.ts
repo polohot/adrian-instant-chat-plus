@@ -9,7 +9,7 @@ declare global {
 }
 
 const firebaseConfig = window.FIREBASE_CONFIG || {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAAnZfGWU1H58BzuvuJgGiv3qTv1phUBys", // Fallback for local dev if .env is missing
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "", // Use environment variable
   authDomain: "gen-lang-client-0514398810.firebaseapp.com",
   projectId: "gen-lang-client-0514398810",
   storageBucket: "gen-lang-client-0514398810.firebasestorage.app",
