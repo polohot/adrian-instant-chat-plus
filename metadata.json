@@ -1,0 +1,5 @@
+{
+  "name": "Instant Chat +",
+  "description": "A persistent, anonymous chat application that creates new rooms via URL. Supports rich text and image pasting.",
+  "requestFramePermissions": []
+}

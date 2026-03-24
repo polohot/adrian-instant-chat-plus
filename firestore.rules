@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper Functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isValidRoom(data) {
+      return data.keys().hasAll(['createdAt']) &&
+             data.createdAt is timestamp;
+    }
+
+    function isValidMessage(data) {
+      return data.keys().hasAll(['sender', 'text', 'timestamp']) &&
+             data.sender is string && data.sender.size() > 0 && data.sender.size() < 50 &&
+             data.text is string && data.text.size() < 10000 &&
+             data.timestamp is timestamp;
+    }
+
+    // Chat Rooms
+    match /rooms/{roomId} {
+      allow read: if true; // Publicly readable if you have the ID
+      allow create: if isAuthenticated() && isValidRoom(request.resource.data);
+      allow update: if isAuthenticated(); // For potential room name updates
+
+      // Messages Subcollection
+      match /messages/{messageId} {
+        allow read: if true; // Publicly readable if you have the room ID
+        allow create: if isAuthenticated() && isValidMessage(request.resource.data);
+        allow update, delete: if false; // Messages are persistent and immutable
+      }
+    }
+  }
+}
