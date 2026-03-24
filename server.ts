@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 8000;
+  const PORT = process.env.PORT || 8000;
 
   // API routes can be added here if needed
   app.get("/api/health", (req, res) => {

@@ -458,72 +458,72 @@ export default function App() {
     <ErrorBoundary>
       <div className="flex flex-col h-screen bg-[#0a0a0a] text-[#e0e0e0] font-sans selection:bg-orange-500/30">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0f0f0f] z-10">
+      <header className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-[#0f0f0f] z-10">
         <div 
-          className="flex items-center gap-3 cursor-pointer group"
+          className="flex items-center gap-2 cursor-pointer group"
           onClick={() => {
             window.history.replaceState({}, '', window.location.pathname);
             setRoomId(null);
             setView('home');
           }}
         >
-          <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform">
-            <MessageSquare className="text-black w-6 h-6" />
+          <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform">
+            <MessageSquare className="text-black w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white">Instant Chat +</h1>
-            <div className="flex items-center gap-2 text-[10px] uppercase tracking-wider font-mono opacity-50">
-              <Hash className="w-3 h-3" />
+            <h1 className="text-lg font-bold tracking-tight text-white">Instant Chat +</h1>
+            <div className="flex items-center gap-1.5 text-[9px] uppercase tracking-wider font-mono opacity-50">
+              <Hash className="w-2.5 h-2.5" />
               <span>{roomId}</span>
             </div>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button 
             onClick={copyRoomLink}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/5 hover:bg-white/10 transition-colors text-xs font-medium border border-white/5"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-white/5 hover:bg-white/10 transition-colors text-[10px] font-medium border border-white/5"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-green-500" /> : <Copy className="w-3.5 h-3.5" />}
+            {copied ? <Check className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3" />}
             <span>{copied ? 'Copied' : 'Invite'}</span>
           </button>
           
           <div 
             onClick={() => setShowUsernameModal(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-orange-500/10 hover:bg-orange-500/20 transition-all cursor-pointer border border-orange-500/20 group"
+            className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-orange-500/10 hover:bg-orange-500/20 transition-all cursor-pointer border border-orange-500/20 group"
           >
-            <User className="w-4 h-4 text-orange-500" />
-            <span className="text-sm font-semibold text-orange-500 group-hover:text-orange-400">{username || 'Guest'}</span>
+            <User className="w-3.5 h-3.5 text-orange-500" />
+            <span className="text-xs font-semibold text-orange-500 group-hover:text-orange-400">{username || 'Guest'}</span>
           </div>
         </div>
       </header>
 
       {/* Chat Area */}
-      <main className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+      <main className="flex-1 overflow-y-auto p-3 space-y-3 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full opacity-30 space-y-4">
-            <Plus className="w-12 h-12" />
-            <p className="font-mono text-sm uppercase tracking-widest">No messages yet. Start the conversation.</p>
+          <div className="flex flex-col items-center justify-center h-full opacity-30 space-y-2">
+            <Plus className="w-8 h-8" />
+            <p className="font-mono text-[10px] uppercase tracking-widest">No messages yet.</p>
           </div>
         )}
         
         {messages.map((msg, index) => (
           <motion.div 
             key={msg.id}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
             className={`flex flex-col ${msg.sender === username ? 'items-end' : 'items-start'}`}
           >
-            <div className="flex items-center gap-2 mb-1 px-1">
-              <span className={`text-[10px] font-bold uppercase tracking-widest ${msg.sender === username ? 'text-orange-500' : 'text-blue-400'}`}>
+            <div className="flex items-center gap-1.5 mb-0.5 px-1">
+              <span className={`text-[9px] font-bold uppercase tracking-widest ${msg.sender === username ? 'text-orange-500' : 'text-blue-400'}`}>
                 {msg.sender}
               </span>
-              <span className="text-[10px] opacity-30 font-mono">
+              <span className="text-[9px] opacity-30 font-mono">
                 {msg.timestamp ? format(msg.timestamp.toDate(), 'HH:mm') : '--:--'}
               </span>
             </div>
             
-            <div className={`max-w-[80%] p-4 rounded-2xl shadow-xl ${
+            <div className={`max-w-[85%] p-2.5 rounded-xl shadow-lg ${
               msg.sender === username 
                 ? 'bg-orange-500 text-black rounded-tr-none' 
                 : 'bg-[#1a1a1a] text-white border border-white/5 rounded-tl-none'
@@ -532,11 +532,11 @@ export default function App() {
                 <img 
                   src={msg.imageUrl} 
                   alt="Pasted content" 
-                  className="max-w-full rounded-lg mb-3 border border-black/10"
+                  className="max-w-full rounded-lg mb-2 border border-black/10"
                   referrerPolicy="no-referrer"
                 />
               )}
-              <div className="prose prose-invert prose-sm max-w-none">
+              <div className="prose prose-invert prose-xs max-w-none leading-tight">
                 <Markdown>{msg.text}</Markdown>
               </div>
             </div>
@@ -546,7 +546,7 @@ export default function App() {
       </main>
 
       {/* Input Area */}
-      <footer className="p-6 bg-[#0f0f0f] border-t border-white/10">
+      <footer className="p-3 bg-[#0f0f0f] border-t border-white/10">
         <form 
           onSubmit={(e) => { e.preventDefault(); sendMessage(inputText); }}
           className="relative max-w-4xl mx-auto"
@@ -556,37 +556,17 @@ export default function App() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             onPaste={handlePaste}
-            placeholder="Type a message... (Markdown supported, paste images directly)"
-            className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-6 py-4 pr-16 focus:outline-none focus:border-orange-500/50 transition-all text-white placeholder:text-white/20 shadow-inner"
+            placeholder="Type a message..."
+            className="w-full bg-[#1a1a1a] border border-white/10 rounded-lg px-4 py-2.5 pr-12 focus:outline-none focus:border-orange-500/50 transition-all text-sm text-white placeholder:text-white/20 shadow-inner"
           />
           <button
             type="submit"
             disabled={isSending || (!inputText.trim())}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center text-black hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-500/20"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-orange-500 rounded-md flex items-center justify-center text-black hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-orange-500/20"
           >
-            {isSending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
+            {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
           </button>
         </form>
-        <div className="mt-3 flex flex-col items-center gap-3">
-          <div className="flex justify-center gap-6 text-[10px] uppercase tracking-widest font-mono opacity-30">
-            <div className="flex items-center gap-1.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-              <span>Connected</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <ImageIcon className="w-3 h-3" />
-              <span>Paste Images</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold">**Bold**</span>
-              <span>_Italic_</span>
-            </div>
-          </div>
-          <div className="text-[10px] uppercase tracking-widest opacity-30 font-mono">
-            Vibe coded by <a href="https://www.linkedin.com/in/adrian-luyaphan/" target="_blank" rel="noopener noreferrer" className="text-orange-500 hover:underline">Adrian Luyaphan</a> // 
-            <a href="https://github.com/polohot" target="_blank" rel="noopener noreferrer" className="ml-2 text-orange-500 hover:underline">GitHub</a>
-          </div>
-        </div>
       </footer>
 
       {/* Username Modal */}
