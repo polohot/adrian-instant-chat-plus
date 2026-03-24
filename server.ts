@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = 8000;
 
   // API routes can be added here if needed
   app.get("/api/health", (req, res) => {
@@ -25,14 +25,14 @@ async function startServer() {
       server: { middlewareMode: true },
       appType: "spa",
     });
-    
+
     // Inject Firebase Config in Dev
     app.use(async (req, res, next) => {
       if (req.url === '/index.html' || req.url === '/') {
         try {
           let html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf-8');
           html = await vite.transformIndexHtml(req.url, html);
-          
+
           let firebaseConfig: any = {};
           try {
             const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
@@ -52,7 +52,7 @@ async function startServer() {
             '<!-- FIREBASE_CONFIG -->',
             `<script>window.FIREBASE_CONFIG = ${JSON.stringify(firebaseConfig)};</script>`
           );
-          
+
           return res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
         } catch (e) {
           vite.ssrFixStacktrace(e as Error);
@@ -70,7 +70,7 @@ async function startServer() {
     app.get('*', (req, res) => {
       try {
         let html = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
-        
+
         let firebaseConfig: any = {};
         try {
           const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
@@ -90,7 +90,7 @@ async function startServer() {
           '<!-- FIREBASE_CONFIG -->',
           `<script>window.FIREBASE_CONFIG = ${JSON.stringify(firebaseConfig)};</script>`
         );
-        
+
         res.send(html);
       } catch (e) {
         res.status(500).send("Error loading index.html");
