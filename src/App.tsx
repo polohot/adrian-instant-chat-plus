@@ -424,7 +424,7 @@ export default function App() {
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                 <div>
                   <h4 className="text-[10px] font-black tracking-[0.2em] uppercase text-orange-500 mb-2">Protocol Specifications</h4>
-                  <p className="text-sm text-white/30 font-mono">v1.0.4-stable // Cloud-Native Architecture</p>
+                  <p className="text-sm text-white/30 font-mono">V1.0.5-stable // Cloud-Native Architecture</p>
                 </div>
                 <div className="flex gap-12">
                   <div>
@@ -633,7 +633,7 @@ export default function App() {
               </form>
               
               <div className="mt-6 pt-6 border-t border-white/5 flex justify-center">
-                <p className="text-[10px] uppercase tracking-widest opacity-30">Instant Chat + Protocol v1.0</p>
+                <p className="text-[10px] uppercase tracking-widest opacity-30">Instant Chat + Protocol V1.0.5-stable</p>
               </div>
             </motion.div>
           </motion.div>

@@ -2,6 +2,8 @@
 
 A minimalist, persistent chat protocol designed for speed and privacy. No accounts, no tracking, just pure conversation.
 
+**Current Version**: V1.0.5-stable
+
 ## Features
 
 - **URL-Based Rooms**: Rooms are identified by unique URL parameters. Share the link to invite others instantly.

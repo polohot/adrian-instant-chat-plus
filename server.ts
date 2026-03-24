@@ -33,7 +33,7 @@ async function startServer() {
           let html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf-8');
           html = await vite.transformIndexHtml(req.url, html);
           
-          let firebaseConfig = {};
+          let firebaseConfig: any = {};
           try {
             const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
             if (fs.existsSync(configPath)) {
@@ -41,6 +41,11 @@ async function startServer() {
             }
           } catch (e) {
             console.error("Error reading local firebase config:", e);
+          }
+
+          // Override apiKey with environment variable if it exists
+          if (process.env.FIREBASE_API_KEY) {
+            firebaseConfig.apiKey = process.env.FIREBASE_API_KEY;
           }
 
           html = html.replace(
@@ -66,13 +71,20 @@ async function startServer() {
       try {
         let html = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8');
         
-        const firebaseConfig = {
-          apiKey: process.env.FIREBASE_API_KEY,
-          authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-          projectId: process.env.FIREBASE_PROJECT_ID,
-          appId: process.env.FIREBASE_APP_ID,
-          firestoreDatabaseId: process.env.FIREBASE_DATABASE_ID
-        };
+        let firebaseConfig: any = {};
+        try {
+          const configPath = path.join(process.cwd(), 'firebase-applet-config.json');
+          if (fs.existsSync(configPath)) {
+            firebaseConfig = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+          }
+        } catch (e) {
+          console.error("Error reading firebase config in production:", e);
+        }
+
+        // Override apiKey with environment variable if it exists
+        if (process.env.FIREBASE_API_KEY) {
+          firebaseConfig.apiKey = process.env.FIREBASE_API_KEY;
+        }
 
         html = html.replace(
           '<!-- FIREBASE_CONFIG -->',

@@ -2,7 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { getFirestore, collection, doc, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDoc, setDoc } from 'firebase/firestore';
 // Firebase configuration
-const firebaseConfig = {
+declare global {
+  interface Window {
+    FIREBASE_CONFIG?: any;
+  }
+}
+
+const firebaseConfig = window.FIREBASE_CONFIG || {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAAnZfGWU1H58BzuvuJgGiv3qTv1phUBys", // Fallback for local dev if .env is missing
   authDomain: "gen-lang-client-0514398810.firebaseapp.com",
   projectId: "gen-lang-client-0514398810",
